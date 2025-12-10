@@ -109,6 +109,12 @@ export default function CreateTaskModal({
       queryClient.invalidateQueries({
         queryKey: ["projectTasks", projectId.toString()],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["projects"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["dashboardStats"],
+      });
     },
   });
 

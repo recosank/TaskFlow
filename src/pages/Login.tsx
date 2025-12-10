@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 import { LoginSchema } from "../lib/schema";
 import { useAuth } from "../hooks/useAuth";
 import Spinner from "../components/ui/Spinner";
@@ -14,6 +15,7 @@ export default function Login() {
   const { user, authReady, login } = useAuth();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = React.useState(false);
+  const queryClient = useQueryClient();
 
   const {
     register,
@@ -32,6 +34,7 @@ export default function Login() {
   const onSubmit = async (data: FormData) => {
     try {
       await login(data.email, data.password);
+      queryClient.clear();
       navigate("/");
     } catch (err: any) {
       alert(err?.response?.data?.error || "Login failed");

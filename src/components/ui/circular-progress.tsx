@@ -7,12 +7,14 @@ export default function CircularProgress({
   size = 84,
   stroke = 8,
   label,
+  labelClassName,
 }: {
   value: number;
   max?: number;
   size?: number;
   stroke?: number;
   label?: React.ReactNode;
+  labelClassName?: any;
 }) {
   const radius = (size - stroke) / 2;
   const circumference = 2 * Math.PI * radius;
@@ -46,7 +48,7 @@ export default function CircularProgress({
       </svg>
 
       <div className="-mt-[72px] w-full text-center ">
-        <div className="text-sm font-medium">
+        <div className={`${labelClassName} text-sm font-medium`}>
           {label ?? `${Math.round(value)}${max === 100 ? "%" : ""}`}
         </div>
       </div>

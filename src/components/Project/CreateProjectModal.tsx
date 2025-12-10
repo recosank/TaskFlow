@@ -1,19 +1,29 @@
-import React, { useState } from "react";
+// components/Project/ProjectFormModal.tsx
+import React, { useState, useEffect } from "react";
 import { z } from "zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import api from "../../api/axios";
 import { projectSchema } from "../../lib/schema";
-import type { Props } from "../../lib/types";
+import type { Project } from "../../lib/types";
 
 type ProjectInput = z.infer<typeof projectSchema>;
+type ProjectFormModalProps = {
+  open: boolean;
+  onClose: () => void;
+  onSuccess?: (data?: any) => void;
+  project?: Project | null;
+};
 
 export default function CreateProjectModal({
   open,
   onClose,
   onSuccess,
-}: Props) {
+  project,
+}: ProjectFormModalProps) {
   const queryClient = useQueryClient();
+  const isEditMode = !!project;
+
   const [form, setForm] = useState<ProjectInput>({
     title: "",
     description: "",
@@ -21,16 +31,48 @@ export default function CreateProjectModal({
   const [error, setError] = useState<string>("");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: (payload: ProjectInput) =>
-      api.post("/projects", payload).then((res) => res.data),
+  useEffect(() => {
+    if (project && open) {
+      setForm({
+        title: project.title,
+        description: project.description || "",
+      });
+    } else {
+      setForm({ title: "", description: "" });
+    }
+    setError("");
+    setFieldErrors({});
+  }, [project, open]);
+
+  const mutation = useMutation({
+    mutationFn: (payload: ProjectInput) => {
+      if (isEditMode && project) {
+        return api
+          .put(`/projects/${project.id}`, payload)
+          .then((res) => res.data);
+      } else {
+        return api.post("/projects", payload).then((res) => res.data);
+      }
+    },
     onMutate: () => {
-      return { toastId: toast.loading("Creating project...") };
+      return {
+        toastId: toast.loading(
+          isEditMode ? "Updating project..." : "Creating project..."
+        ),
+      };
     },
     onSuccess: (data, _, context) => {
       queryClient.invalidateQueries({ queryKey: ["projects"] });
+      if (isEditMode && project) {
+        queryClient.invalidateQueries({
+          queryKey: ["projectMeta", String(project.id)],
+        });
+      }
+
       onSuccess?.(data);
-      toast.success("Project created", { id: context?.toastId });
+      toast.success(isEditMode ? "Project updated" : "Project created", {
+        id: context?.toastId,
+      });
       handleReset();
       onClose();
     },
@@ -43,7 +85,9 @@ export default function CreateProjectModal({
   });
 
   const handleReset = () => {
-    setForm({ title: "", description: "" });
+    if (!isEditMode) {
+      setForm({ title: "", description: "" });
+    }
     setError("");
     setFieldErrors({});
   };
@@ -76,7 +120,7 @@ export default function CreateProjectModal({
       return;
     }
 
-    mutate(result.data);
+    mutation.mutate(result.data);
   };
 
   if (!open) return null;
@@ -84,7 +128,9 @@ export default function CreateProjectModal({
   return (
     <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg w-96 p-6 shadow-lg">
-        <h2 className="text-lg font-semibold mb-4">Create New Project</h2>
+        <h2 className="text-lg font-semibold mb-4">
+          {isEditMode ? "Edit Project" : "Create New Project"}
+        </h2>
 
         {error && <p className="text-red-600 text-sm mb-2">{error}</p>}
 
@@ -96,7 +142,7 @@ export default function CreateProjectModal({
               className="w-full border p-2 rounded"
               value={form.title}
               onChange={handleChange("title")}
-              disabled={isPending}
+              disabled={mutation.isPending}
             />
           </div>
 
@@ -107,7 +153,7 @@ export default function CreateProjectModal({
               rows={3}
               value={form.description}
               onChange={handleChange("description")}
-              disabled={isPending}
+              disabled={mutation.isPending}
             />
             {fieldErrors.description && (
               <p className="text-red-500 text-xs mt-1">
@@ -121,16 +167,22 @@ export default function CreateProjectModal({
               type="button"
               className="px-4 py-2 border rounded hover:bg-gray-50 disabled:opacity-60"
               onClick={onClose}
-              disabled={isPending}
+              disabled={mutation.isPending}
             >
               Cancel
             </button>
             <button
               type="submit"
               className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 disabled:opacity-60"
-              disabled={isPending}
+              disabled={mutation.isPending}
             >
-              {isPending ? "Creating..." : "Create"}
+              {mutation.isPending
+                ? isEditMode
+                  ? "Saving..."
+                  : "Creating..."
+                : isEditMode
+                ? "Save Changes"
+                : "Create"}
             </button>
           </div>
         </form>

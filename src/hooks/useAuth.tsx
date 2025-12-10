@@ -7,6 +7,7 @@ import {
 } from "../api/authMemory";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../components/ui/Spinner";
+import { useQueryClient } from "@tanstack/react-query";
 import type { AuthContextType, User } from "@/lib/types";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -15,6 +16,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User>(null);
   const [authReady, setAuthReady] = useState(false);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     let isActive = true;
@@ -57,6 +59,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const login = async (email: string, password: string) => {
+    queryClient.clear();
     const response = await axios.post(
       `${import.meta.env.VITE_API_URL}/auth/login`,
 
@@ -77,6 +80,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = async () => {
     try {
+      queryClient.clear();
       await axios.post(
         `${import.meta.env.VITE_API_URL}/auth/logout`,
         {},

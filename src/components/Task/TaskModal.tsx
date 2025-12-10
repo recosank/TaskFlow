@@ -47,6 +47,12 @@ export default function TaskModal({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["project"] });
       queryClient.invalidateQueries({ queryKey: ["projectTasks"] });
+      queryClient.invalidateQueries({
+        queryKey: ["projects"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["dashboardStats"],
+      });
       onSaved?.();
       toast.success("Task updated");
       setEditing(false);
@@ -63,6 +69,12 @@ export default function TaskModal({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["project"] });
       queryClient.invalidateQueries({ queryKey: ["projectTasks"] });
+      queryClient.invalidateQueries({
+        queryKey: ["projects"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["dashboardStats"],
+      });
       onSaved?.();
       toast.success("Task deleted");
       onClose();

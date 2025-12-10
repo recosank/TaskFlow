@@ -16,7 +16,7 @@ export const signupSchema = z
 
 export const LoginSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(6),
+  password: z.string(),
 });
 
 export const TaskSchema = z.object({

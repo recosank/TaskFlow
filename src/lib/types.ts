@@ -8,6 +8,7 @@ export type Task = {
 };
 
 export type Project = {
+  [x: string]: any;
   id: number;
   title: string;
   description?: string | null;
