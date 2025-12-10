@@ -39,11 +39,7 @@ export default function ProjectView() {
     enabled: !!projectId,
   });
 
-  const {
-    data: tasksRes,
-    isLoading: loadingTasks,
-    isError: tasksError,
-  } = useQuery<Task[]>({
+  const { data: tasksRes, isLoading: loadingTasks } = useQuery<Task[]>({
     queryKey: [
       "projectTasks",
       String(projectId),

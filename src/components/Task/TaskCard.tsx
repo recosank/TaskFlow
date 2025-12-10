@@ -4,7 +4,6 @@ export default function TaskCard({
   title,
   meta,
   priority,
-  status,
 }: {
   title: string;
   meta?: string;

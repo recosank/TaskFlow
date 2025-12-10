@@ -44,7 +44,7 @@ export default function TaskModal({
       const res = await api.put(`/tasks/${task.id}`, payload);
       return res.data;
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["project"] });
       queryClient.invalidateQueries({ queryKey: ["projectTasks"] });
       onSaved?.();

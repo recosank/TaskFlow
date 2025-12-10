@@ -7,21 +7,13 @@ import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import { SkeletonWrapper } from "./Skeletons";
 
 export default function DashboardContent() {
-  const {
-    data: projectsRes,
-    isLoading: loadingProjects,
-    isError: errorProjects,
-  } = useQuery({
+  const { data: projectsRes, isLoading: loadingProjects } = useQuery({
     queryKey: ["projects"],
     queryFn: async () => (await api.get("/projects")).data,
     staleTime: 60_000,
   });
 
-  const {
-    data: dashboardRes,
-    isLoading: loadingDashboard,
-    isError: errorDashboard,
-  } = useQuery({
+  const { data: dashboardRes, isLoading: loadingDashboard } = useQuery({
     queryKey: ["dashboardStats"],
     queryFn: async () => (await api.get("/tasks/dashboard")).data,
     staleTime: 30_000,
