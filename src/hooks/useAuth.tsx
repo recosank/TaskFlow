@@ -22,7 +22,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const initializeAuth = async () => {
       try {
         const response = await axios.post(
-          "http://localhost:4000/api/auth/refresh",
+          `${import.meta.env.VITE_API_URL}/auth/refresh`,
           {},
           { withCredentials: true }
         );
@@ -58,7 +58,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (email: string, password: string) => {
     const response = await axios.post(
-      "http://localhost:4000/api/auth/login",
+      `${import.meta.env.VITE_API_URL}/auth/login`,
+
       { email, password },
       { withCredentials: true }
     );
@@ -77,7 +78,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = async () => {
     try {
       await axios.post(
-        "http://localhost:4000/api/auth/logout",
+        `${import.meta.env.VITE_API_URL}/auth/logout`,
         {},
         { withCredentials: true }
       );
