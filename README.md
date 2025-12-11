@@ -57,7 +57,11 @@ I built this full-stack assignment using **Node.js, Express, PostgreSQL, Prisma 
 - Smooth transitions
 
 **Screenshot:**
-`/screenshots/project-view.png`
+
+<img width="1455" height="834" alt="Screenshot 2025-12-11 at 5 57 44 AM" src="https://github.com/user-attachments/assets/16b26d3e-30e8-4296-b3e8-f5b88b903454" />
+
+<img width="1456" height="835" alt="Screenshot 2025-12-11 at 5 58 39 AM" src="https://github.com/user-attachments/assets/45a785a1-188d-43ba-b38e-0ba2e88efbd6" />
+
 
 ---
 
@@ -69,7 +73,8 @@ I built this full-stack assignment using **Node.js, Express, PostgreSQL, Prisma 
 ✔ Animations via Framer Motion
 
 **Screenshot:**
-`/screenshots/dashboard.png`
+
+<img width="1470" height="835" alt="Screenshot 2025-12-11 at 6 00 16 AM" src="https://github.com/user-attachments/assets/6d80210d-a268-4775-a911-3b0d8c7c6c83" />
 
 ---
 
