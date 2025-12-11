@@ -1,73 +1,141 @@
-# React + TypeScript + Vite
+Full-Stack Assignment — Node.js, PostgreSQL, Prisma, React, TypeScript
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+I built this full-stack assignment using **Node.js, Express, PostgreSQL, Prisma ORM**, and a **React + TypeScript frontend**. The project features **secure JWT authentication**, **HTTP-only refresh tokens**, **automatic access-token renewal**, **TanStack React Query for real-time UI**, **Zod validation**, **Error Boundaries** with Fallback UI, and a clean reusable architecture using **custom hooks**, **protected routes**, and **Axios interceptors**. TailwindCSS and Radix UI ensure a modern interface, while Prisma provides an efficient, type-safe database layer.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# 🛠️ Tech Stack
 
-## React Compiler
+### **Frontend**
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 19 + TypeScript
+- Vite
+- TanStack React Query
+- React Router DOM
+- React Hook Form + Zod
+- Axios (with token-refresh interceptors)
+- TailwindCSS
+- Error Boundaries + Fallback UI
+- Radix UI
+- Lucide Icons
+- react-loading-skeleton
+- Framer Motion
 
-## Expanding the ESLint configuration
+### **Backend**
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Node.js
+- Express
+- PostgreSQL
+- Prisma ORM
+- JWT (Access + Refresh Tokens)
+- bcrypt
+- cookie-parser
+- express-async-errors
+- Zod validation
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+# 🔐 Authentication Flow
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- User logs in → server sets **secure HTTP-only refresh token** + returns access token
+- Access token is stored **in memory only** (safe)
+- On page refresh → `/auth/refresh` automatically issues a new access token
+- Axios interceptors retry failed (401) requests
+- Protected backend routes require a valid JWT
+- Protected frontend pages use custom hooks (`useAuth`, `useProtectedRoute`)
+
+---
+
+# 📸 Main UI Screens
+
+## 🗂️ Project View Page
+
+✔ React Query caching
+✔ Placeholder data to avoid white screen
+✔ Skeleton loaders
+✔ Error Boundary fallback
+✔ Smooth transitions
+
+**Screenshot:**
+`/screenshots/project-view.png`
+
+---
+
+## 📊 Dashboard
+
+✔ User-specific data
+✔ Protected route
+✔ Real-time updates via React Query
+✔ Animations via Framer Motion
+
+**Screenshot:**
+`/screenshots/dashboard.png`
+
+---
+
+## 🗄 Prisma Studio
+
+**Screenshot:**
+`/screenshots/prisma-studio.png`
+
+---
+
+# ▶️ How to Run the Project
+
+## 🔧 Backend
+
+### 1. Install Dependencies
+
+```bash
+cd backend
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Create `.env`
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```
+DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/DBNAME"
+JWT_SECRET="your-access-secret"
+REFRESH_SECRET="your-refresh-secret"
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 3. Generate Prisma Client
+
+```bash
+npm run prisma:generate
+```
+
+### 4. Run Migrations
+
+```bash
+npm run prisma:migrate
+```
+
+### 5. Start Server
+
+```bash
+npm run dev
+```
+
+---
+
+## 🎨 Frontend
+
+### 1. Install Dependencies
+
+```bash
+cd frontend
+npm install
+```
+
+### 2. Create `.env`
+
+```
+VITE_API_URL="http://localhost:5000"
+```
+
+### 3. Start Dev Server
+
+```bash
+npm run dev
 ```
