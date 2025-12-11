@@ -8,6 +8,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { LoginSchema } from "../lib/schema";
 import { useAuth } from "../hooks/useAuth";
 import Spinner from "../components/ui/Spinner";
+import TaskFlow from "../assets/taskFlow.png";
 
 type FormData = z.infer<typeof LoginSchema>;
 
@@ -50,7 +51,16 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6">
+    <div className="min-h-screen flex flex-col items-center justify-center p-6">
+      <div className="flex items-center gap-3 mt-6 mb-4 cursor-pointer">
+        <div className="w-12 h-12 rounded-lg bg-indigo-50 flex items-center justify-center">
+          <img src={TaskFlow} />
+        </div>
+        <div>
+          <h3 className="text-lg font-semibold">TaskFlow</h3>
+          <p className="text-xs text-gray-500">Mini Project Manager</p>
+        </div>
+      </div>
       <div className="w-full max-w-md bg-white rounded-2xl shadow p-6">
         <h3 className="text-lg font-semibold mb-3">Sign in</h3>
 
