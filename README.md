@@ -1,6 +1,6 @@
-Full-Stack Assignment — Node.js, PostgreSQL, Prisma, React, TypeScript
+# Full-Stack Assignment — Node.js, PostgreSQL, Prisma, React, TypeScript
 
-I built this full-stack assignment using **Node.js, Express, PostgreSQL, Prisma ORM**, and a **React + TypeScript frontend**. The project features **secure JWT authentication**, **HTTP-only refresh tokens**, **automatic access-token renewal**, **TanStack React Query for real-time UI**, **Zod validation**, **Error Boundaries** with Fallback UI, and a clean reusable architecture using **custom hooks**, **protected routes**, and **Axios interceptors**. TailwindCSS and Radix UI ensure a modern interface, while Prisma provides an efficient, type-safe database layer.
+I built this full-stack assignment using **Node.js, Express, PostgreSQL, Prisma ORM**, and a **React + TypeScript frontend**. The project features **secure JWT authentication**, **HTTP-only refresh tokens**, **automatic access-token renewal**, **TanStack React Query for real-time UI**, **Zod validation**, **Error Boundaries** with Fallback UI, and a clean reusable architecture using **custom hooks**, **protected routes**, and **Axios interceptors**. It also includes an optimized debounced search functionality, reducing unnecessary API calls and providing a smooth search experience. TailwindCSS and Radix UI ensure a modern interface, while Prisma provides an efficient, type-safe database layer.
 
 ---
 
@@ -46,15 +46,15 @@ I built this full-stack assignment using **Node.js, Express, PostgreSQL, Prisma 
 
 ---
 
-# 📸 Main UI Screens
+# Main UI Screens
 
 ## 🗂️ Project View Page
 
-✔ React Query caching
-✔ Placeholder data to avoid white screen
-✔ Skeleton loaders
-✔ Error Boundary fallback
-✔ Smooth transitions
+- React Query caching
+- Placeholder data to avoid white screen
+- Skeleton loaders
+- Error Boundary fallback
+- Smooth transitions
 
 **Screenshot:**
 `/screenshots/project-view.png`
@@ -73,58 +73,13 @@ I built this full-stack assignment using **Node.js, Express, PostgreSQL, Prisma 
 
 ---
 
-## 🗄 Prisma Studio
-
-**Screenshot:**
-`/screenshots/prisma-studio.png`
-
----
-
 # ▶️ How to Run the Project
-
-## 🔧 Backend
-
-### 1. Install Dependencies
-
-```bash
-cd backend
-npm install
-```
-
-### 2. Create `.env`
-
-```
-DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/DBNAME"
-JWT_SECRET="your-access-secret"
-REFRESH_SECRET="your-refresh-secret"
-```
-
-### 3. Generate Prisma Client
-
-```bash
-npm run prisma:generate
-```
-
-### 4. Run Migrations
-
-```bash
-npm run prisma:migrate
-```
-
-### 5. Start Server
-
-```bash
-npm run dev
-```
-
----
 
 ## 🎨 Frontend
 
 ### 1. Install Dependencies
 
 ```bash
-cd frontend
 npm install
 ```
 
